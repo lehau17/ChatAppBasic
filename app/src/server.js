@@ -3,6 +3,7 @@ const path = require("path");
 const http = require("http");
 const socketio = require("socket.io");
 const createMessageWithTime = require("./utils/MessageWithTime");
+const { addUser, getUserByRoom } = require("./utils/users");
 const app = express();
 const port = 3000;
 app.use(express.json());
@@ -14,6 +15,7 @@ let count = 1;
 io.on("connection", (socket) => {
   socket.on("joinRoom", ({ name, room }) => {
     socket.join(room);
+    addUser(name, room);
     socket.emit("join", "welcome");
     socket.broadcast.to(room).emit("join", `${name} other client connected`);
     socket.on("sendMessageToServer", (mes) => {
@@ -26,6 +28,10 @@ io.on("connection", (socket) => {
     });
     socket.on("disconnect", () => {
       io.to(room).emit("leftRoom", `${name} disconnected`);
+    });
+    socket.on("getListByRoom", () => {
+      console.log(room);
+      socket.emit("getListByServer", getUserByRoom(room));
     });
   });
 });

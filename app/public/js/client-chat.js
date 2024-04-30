@@ -42,3 +42,11 @@ user();
 socket.on("leftRoom", (message) => {
   alert(message);
 });
+
+document.getElementById("btn-list-user").addEventListener("click", () => {
+  socket.emit("getListByRoom");
+});
+
+socket.on("getListByServer", (list) => {
+  list.forEach((e) => console.log(e));
+});
