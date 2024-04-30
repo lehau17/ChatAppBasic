@@ -11,7 +11,7 @@ socket.on("join", (mes) => {
 
 socket.on("sendMessageToClient", (mes) => {
   let ele = document.createElement("div");
-  ele.innerText = mes;
+  ele.innerText = mes.message;
   document.getElementsByClassName("message")[0].appendChild(ele);
 });
 

@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const http = require("http");
 const socketio = require("socket.io");
+const createMessageWithTime = require("./utils/MessageWithTime");
 const app = express();
 const port = 3000;
 app.use(express.json());
@@ -14,7 +15,7 @@ io.on("connection", (socket) => {
   socket.emit("join", "welcome");
   socket.broadcast.emit("join", "other client connected");
   socket.on("sendMessageToServer", (mes) => {
-    io.emit("sendMessageToClient", mes);
+    io.emit("sendMessageToClient", createMessageWithTime(mes));
   });
 
   socket.on("shareLocation", (location) => {
