@@ -1,8 +1,17 @@
 var format = require("date-format");
-const createMessageWithTime = (message) => {
+const createMessageWithTime = ({ message, userName }) => {
   return {
     message,
-    createAt: format("dd/MM/yyyy HH:mm:ss", new Date()),
+    userName,
+    createAt: format("dd/MM/yyyy hh:mm:ss", new Date()),
   };
 };
-module.exports = createMessageWithTime;
+
+const createUrlWithTime = ({ url, userName }) => {
+  return {
+    url,
+    userName,
+    createAt: format("dd/MM/yyyy hh:mm:ss", new Date()),
+  };
+};
+module.exports = { createMessageWithTime, createUrlWithTime };
