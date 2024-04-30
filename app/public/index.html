@@ -2,22 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport", initial-scale=1.0">
-    <title>Chat App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
 <body>
-    <h1>Chat App by Hau Le</h1>
-    <form id="form-chat">
-        <input type="text" id="text-chat">
-        <button id="btn-send">
-            send
-        </button>
-        <button type="button" id="btn-share-location">gửi vị trí </button>
-    </form>
-    <div class="message">
+    <form action="/chat.html">
 
-    </div>
-    <script src = "/socket.io/socket.io.js"></script>
-    <script src="/js/client-chat.js"></script>
+    <input type="text" name="name" id=i-name">
+    <input type="text" name="room" id=i-room">
+    <button type="submit" id="btn-search-room">Vào phòng</button>
+    </form>
 </body>
 </html>

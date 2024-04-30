@@ -12,18 +12,21 @@ const server = http.createServer(app);
 const io = socketio(server);
 let count = 1;
 io.on("connection", (socket) => {
-  socket.emit("join", "welcome");
-  socket.broadcast.emit("join", "other client connected");
-  socket.on("sendMessageToServer", (mes) => {
-    io.emit("sendMessageToClient", createMessageWithTime(mes));
-  });
+  socket.on("joinRoom", ({ name, room }) => {
+    socket.join(room);
+    socket.emit("join", "welcome");
+    socket.broadcast.to(room).emit("join", `${name} other client connected`);
+    socket.on("sendMessageToServer", (mes) => {
+      io.to(room).emit("sendMessageToClient", createMessageWithTime(mes));
+    });
 
-  socket.on("shareLocation", (location) => {
-    const url = `https://www.google.com/maps?q=${location.latitude},${location.longitude}`;
-    io.emit("sendLocationToAllClient", url);
-  });
-  socket.on("disconnect", () => {
-    console.log("Client left connection");
+    socket.on("shareLocation", (location) => {
+      const url = `https://www.google.com/maps?q=${location.latitude},${location.longitude}`;
+      io.to(room).emit("sendLocationToAllClient", url);
+    });
+    socket.on("disconnect", () => {
+      io.to(room).emit("leftRoom", `${name} disconnected`);
+    });
   });
 });
 server.listen(port, () => {

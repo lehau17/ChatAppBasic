@@ -29,3 +29,16 @@ socket.on("sendLocationToAllClient", (url) => {
   ele.innerText = "Location";
   document.getElementsByClassName("message")[0].appendChild(ele);
 });
+
+const user = () => {
+  let params = location.search;
+  const userProfile = Qs.parse(params, { ignoreQueryPrefix: true });
+  const { name, room } = userProfile;
+  socket.emit("joinRoom", { name, room });
+};
+
+user();
+
+socket.on("leftRoom", (message) => {
+  alert(message);
+});
