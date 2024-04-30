@@ -11,6 +11,8 @@ const server = http.createServer(app);
 const io = socketio(server);
 let count = 1;
 io.on("connection", (socket) => {
+  socket.emit("join", "welcome");
+  socket.broadcast.emit("join", "other client connected");
   socket.on("sendMessageToServer", (mes) => {
     io.emit("sendMessageToClient", mes);
   });

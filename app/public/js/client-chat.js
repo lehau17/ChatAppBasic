@@ -6,6 +6,10 @@ document.getElementById("form-chat").addEventListener("submit", (e) => {
   socket.emit("sendMessageToServer", mes);
 });
 
+socket.on("join", (mes) => {
+  console.log(mes);
+});
+
 socket.on("sendMessageToClient", (mes) => {
   let ele = document.createElement("div");
   ele.innerText = mes;
