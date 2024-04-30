@@ -16,6 +16,11 @@ io.on("connection", (socket) => {
   socket.on("sendMessageToServer", (mes) => {
     io.emit("sendMessageToClient", mes);
   });
+
+  socket.on("shareLocation", (location) => {
+    const url = `https://www.google.com/maps?q=${location.latitude},${location.longitude}`;
+    io.emit("sendLocationToAllClient", url);
+  });
   socket.on("disconnect", () => {
     console.log("Client left connection");
   });
